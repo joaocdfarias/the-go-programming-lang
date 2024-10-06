@@ -1,16 +1,22 @@
-// Echo1 prints its command-line arguments.
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 )
 
 func main() {
-	var arguments, separator string
-	for i := 1; i < len(os.Args); i++ {
-		arguments += separator + os.Args[i]
-		separator = " "
+	counts := make(map[string]int)
+	input := bufio.NewScanner(os.Stdin)
+
+	for input.Scan() {
+		counts[input.Text()]++
 	}
-	fmt.Println(arguments)
+
+	for line, n := range counts {
+		if n > 1 {
+			fmt.Printf("%d\t%s\n", n, line)
+		}
+	}
 }
